@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rights & Responsibilities</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #F2F2F2; /* Very Light Gray */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .accordion-container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #C3ACE8; /* Subtle border using brand color */
+        }
+        .accordion-item {
+            border-bottom: 1px solid #C3ACE8; /* Divider between items */
+        }
+        .accordion-item:last-child {
+            border-bottom: none; /* No border for the last item */
+        }
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 18px 25px;
+            background-color: #C3ACE8; /* Medium Purple for header */
+            color: #532A8C; /* Dark Purple for header text */
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 700; /* font-bold */
+            cursor: pointer;
+            border: none;
+            text-align: left;
+            transition: background-color 0.3s ease;
+            border-radius: 12px 12px 0 0; /* Rounded top corners for first header */
+        }
+        .accordion-item:not(:first-child) .accordion-header {
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        .accordion-item:last-child .accordion-header {
+            border-bottom-left-radius: 12px; /* Rounded bottom corners for last header if content is closed */
+            border-bottom-right-radius: 12px;
+        }
+
+        .accordion-header.active {
+            background-color: #9D8ABB; /* Lighter Purple when active */
+            color: #532A8C; /* Maintain dark purple text */
+            border-bottom: 1px solid #532A8C; /* Darker border when active */
+        }
+        .accordion-header:hover {
+            background-color: #9D8ABB; /* Lighter Purple on hover */
+        }
+        .accordion-header .arrow {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .accordion-header.active .arrow {
+            transform: rotate(90deg); /* Rotate arrow when active */
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            background-color: #ffffff; /* White background for content */
+            padding: 0 25px; /* Initial padding for smooth transition */
+        }
+        .accordion-content.show {
+            max-height: 500px; /* Max height to allow content to expand */
+            padding: 20px 25px; /* Actual padding when shown */
+        }
+        .accordion-content p {
+            font-size: 1rem; /* text-base */
+            color: #475569; /* Slate-600 for content text */
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="accordion-container">
+        <div class="accordion-item">
+            <button class="accordion-header" data-target="content-rights">
+                <span>Your Rights</span>
+                <span class="arrow">&#9654;</span> <!-- Right-pointing triangle -->
+            </button>
+            <div class="accordion-content" id="content-rights">
+                <p>You are entitled to a safe work environment, comprehensive training on equipment use and safety procedures, and access to all required personal protective equipment (PPE). This also includes the right to voice any concerns about equipment faults or unsafe practices without fear of negative consequences.</p>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <button class="accordion-header" data-target="content-responsibilities">
+                <span>Your Responsibilities</span>
+                <span class="arrow">&#9654;</span>
+            </button>
+            <div class="accordion-content" id="content-responsibilities">
+                <p>You are responsible for using all sterilisation equipment strictly in line with manufacturer instructions and your organisation's established policies. This involves ensuring proper upkeep, promptly reporting any malfunctions or hazards, and consistently adhering to all infection control and safety procedures to safeguard yourself, your colleagues, and patients.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const targetId = header.dataset.target;
+                    const targetContent = document.getElementById(targetId);
+
+                    // Close all other open accordions
+                    accordionHeaders.forEach(otherHeader => {
+                        if (otherHeader !== header && otherHeader.classList.contains('active')) {
+                            otherHeader.classList.remove('active');
+                            const otherContent = document.getElementById(otherHeader.dataset.target);
+                            otherContent.classList.remove('show');
+                        }
+                    });
+
+                    // Toggle the clicked accordion
+                    header.classList.toggle('active');
+                    targetContent.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
